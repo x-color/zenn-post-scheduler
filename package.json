@@ -1,9 +1,7 @@
 {
-  "name": "typescript-action",
-  "version": "0.0.0",
+  "name": "zenn-post-scheduler",
+  "version": "1.0.0",
   "private": true,
-  "description": "TypeScript template action",
-  "main": "lib/main.js",
   "scripts": {
     "build": "tsc",
     "format": "prettier --write '**/*.ts'",
@@ -15,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/actions/typescript-action.git"
+    "url": "git+https://github.com/x-color/zenn-post-scheduler.git"
   },
   "keywords": [
     "actions",
