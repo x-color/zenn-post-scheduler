@@ -43,6 +43,8 @@ const publishArticle = (filepath, targetKey) => __awaiter(void 0, void 0, void 0
     try {
         const data = yield fs_1.promises.readFile(filepath);
         const article = (0, scheduler_1.load)(data.toString(), targetKey);
+        core.debug(`Read Article: \n${data.toString()}`);
+        core.debug(`Convert to: \n${article}`);
         if (article.published) {
             core.info(`${filepath} has already published`);
             return null;
@@ -72,7 +74,7 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
             return yield publishArticle((0, path_1.join)(basePath, file), targetKey);
         })));
         const published = result.filter(v => v);
-        core.setOutput('published', published);
+        core.setOutput('published', published.join(','));
     }
     catch (error) {
         if (error instanceof Error) {
