@@ -86,7 +86,7 @@ describe('Check whether an article must be published', () => {
         __published_at: '2021/12/30 09:00:00',
         __content: '\nsample text'
       },
-      new Date(Date.UTC(2021, 11, 31, 0)) // 2021/12/31 09:00:00 JST
+      new Date(Date.UTC(2021, 11, 30, 1)) // 2021/12/30 10:00:00 JST
     )
     expect(result).toBeTruthy()
   })

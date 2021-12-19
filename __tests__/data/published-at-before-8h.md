@@ -5,7 +5,7 @@ type: tech
 topics:
   - typescript
 published: false
-published_at: <YESTERDAY>
+published_at: <BEFORE 8H>
 ---
 
 sample text
