@@ -39,4 +39,4 @@ jobs:
             echo ${{ steps.scheduler.outputs.published }}
             EXIT_CODE=1
           fi
-          exit $FAILED
+          exit $EXIT_CODE
