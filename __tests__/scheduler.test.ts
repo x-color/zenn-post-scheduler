@@ -1,5 +1,4 @@
-import {promises as fs} from 'fs'
-import {load, publish, dump, afterScheduledDate} from './scheduler'
+import {afterScheduledDate, dump, load, publish} from '../src/scheduler'
 
 describe('Load content', () => {
   test('valid content', () => {
