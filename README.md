@@ -54,7 +54,7 @@ name: publish
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: '0 * * * *'
 
 jobs:
   publish:
@@ -65,10 +65,10 @@ jobs:
       - uses: x-color/zenn-post-scheduler@v1.0.0
       # Commit and Push published articles to main branch
       - run: |
-        git config --local user.email "<YOUR EMAIL>"
-        git config --local user.name "<YOUR USERNAME>"
-        git add -u articles
-        git diff --cached --quiet || git commit -m "Publish articles" && git push origin main
+          git config --local user.email '<YOUR EMAIL>'
+          git config --local user.name '<YOUR USERNAME>'
+          git add -u articles
+          git diff --cached --quiet || git commit -m 'Publish articles' && git push origin main
 ```
 
 ### Inputs
