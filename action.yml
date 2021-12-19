@@ -1,11 +1,20 @@
-name: 'Your name here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: "Your name here"
+name: Zenn Post Scheduler
+description: Publish an article of Zenn.
+  It updates 'published' parameter in the article depending on target_key parameter (default 'published_at').
+author: x-color
 inputs:
-  milliseconds: # change this
-    required: true
-    description: 'input description here'
-    default: 'default value if applicable'
+  path:
+    required: false
+    description: A directory path for articles
+    default: articles
+  target_key:
+    required: false
+    description: A key of publication date
+    default: published_at
+outputs:
+  published:
+    description: An list of published articles
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node12"
+  main: "dist/index.js"
