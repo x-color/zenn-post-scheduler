@@ -45,7 +45,7 @@ const publishArticle = (filepath, targetKey) => __awaiter(void 0, void 0, void 0
         const article = (0, scheduler_1.load)(data.toString(), targetKey);
         core.debug(`Read Article:\n${data.toString()}`);
         core.debug(`Convert to:`);
-        for (const key of article.keys()) {
+        for (const key of Object.keys(article)) {
             core.debug(`${key}: ${article[key]}`);
         }
         if (article.published) {
