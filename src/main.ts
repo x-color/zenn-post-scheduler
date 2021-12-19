@@ -45,7 +45,7 @@ const run = async (): Promise<void> => {
     )
     const published = result.filter(v => v)
 
-    core.setOutput('published', published)
+    core.setOutput('published', published.join(','))
   } catch (error) {
     if (error instanceof Error) {
       core.setFailed(error.message)
