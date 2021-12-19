@@ -43,8 +43,11 @@ const publishArticle = (filepath, targetKey) => __awaiter(void 0, void 0, void 0
     try {
         const data = yield fs_1.promises.readFile(filepath);
         const article = (0, scheduler_1.load)(data.toString(), targetKey);
-        core.debug(`Read Article: \n${data.toString()}`);
-        core.debug(`Convert to: \n${article}`);
+        core.debug(`Read Article:\n${data.toString()}`);
+        core.debug(`Convert to:`);
+        for (const key of article.keys()) {
+            core.debug(`${key}: ${article[key]}`);
+        }
         if (article.published) {
             core.info(`${filepath} has already published`);
             return null;
