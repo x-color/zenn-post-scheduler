@@ -4,8 +4,8 @@ on:
   push:
     branches:
       - main
-   tags:
-      - 'v*'
+    tags:
+      - "v*"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,9 +23,9 @@ jobs:
           sed -i -e "s/<YESTERDAY>/$(TZ="Asia/Tokyo" date -d "1 days ago" "+%Y/%m/%d %H:%M:%S")/g" __tests__/data/published-at-yesterday.md
           sed -i -e "s/<TOMORROW>/$(TZ="Asia/Tokyo" date -d "1 days" "+%Y/%m/%d %H:%M:%S")/g" __tests__/data/published-at-tomorrow.md
       - uses: ./
-          with:
-            path: __tests__
+        with:
+          path: __tests__
       - run: |
-          if [ "$(git diff --name-only __tests__/data/)" -nq "__tests__/data/published-at-yesterday.md" ] then
+          if [ "$(git diff --name-only __tests__/data/)" != "__tests__/data/published-at-yesterday.md" ]; then
             exit 1
           fi
