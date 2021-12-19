@@ -46,7 +46,7 @@ const run = async (): Promise<void> => {
         return await publishArticle(join(basePath, file), targetKey)
       })
     )
-    const published = result.filter(v => v)
+    const published = result.filter(v => v) as string[]
 
     core.setOutput('published', published.join(','))
   } catch (error) {
