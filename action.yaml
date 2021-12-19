@@ -16,5 +16,5 @@ outputs:
   published:
     description: An list of published articles
 runs:
-  using: "node12"
-  main: "dist/index.js"
+  using: node12
+  main: dist/index.js
