@@ -1,4 +1,3 @@
-name: "Your name here"
 name: Zenn Post Scheduler
 description: Publish an article of Zenn.
   It updates 'published' parameter in the article depending on target_key parameter (default 'published_at').
