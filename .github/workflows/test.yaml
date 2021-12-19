@@ -20,8 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          sed -i -e "s/<YESTERDAY>/$(TZ="Asia/Tokyo" date -d "1 days ago" "+%Y/%m/%d %H:%M:%S")/g" __tests__/data/published-at-yesterday.md
-          sed -i -e "s/<TOMORROW>/$(TZ="Asia/Tokyo" date -d "1 days" "+%Y/%m/%d %H:%M:%S")/g" __tests__/data/published-at-tomorrow.md
+          sed -i -e "s/<YESTERDAY>/$(TZ='Asia/Tokyo' date -d '1 days ago' '+%Y\/%m\/%d %H:%M:%S')/g" __tests__/data/published-at-yesterday.md
+          sed -i -e "s/<TOMORROW>/$(TZ='Asia/Tokyo' date -d '1 days' '+%Y\/%m\/%d %H:%M:%S')/g" __tests__/data/published-at-tomorrow.md
       - uses: ./
         with:
           path: __tests__
