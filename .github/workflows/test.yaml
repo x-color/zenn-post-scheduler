@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          sed -i -e "s//<BEFORE 8H>$(TZ='Asia/Tokyo' date -d '8 hours ago' '+%Y\/%m\/%d %H:%M:%S')/g" __tests__/data/published-at-before-8h.md
+          sed -i -e "s/<BEFORE 8H>/$(TZ='Asia/Tokyo' date -d '8 hours ago' '+%Y\/%m\/%d %H:%M:%S')/g" __tests__/data/published-at-before-8h.md
           sed -i -e "s/<TOMORROW>/$(TZ='Asia/Tokyo' date -d '1 days' '+%Y\/%m\/%d %H:%M:%S')/g" __tests__/data/published-at-tomorrow.md
           git add -u __tests__/data
       - uses: ./
