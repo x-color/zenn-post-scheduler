@@ -3,10 +3,13 @@ import {afterScheduledDate, dump, load, publish} from './scheduler'
 import {promises as fs} from 'fs'
 import {join} from 'path'
 
-const publishArticle = async (filepath: string): Promise<string | null> => {
+const publishArticle = async (
+  filepath: string,
+  targetKey: string
+): Promise<string | null> => {
   try {
     const data = await fs.readFile(filepath)
-    const article = load(data.toString())
+    const article = load(data.toString(), targetKey)
 
     if (article.published) {
       core.info(`${filepath} has already published`)
@@ -32,11 +35,12 @@ const publishArticle = async (filepath: string): Promise<string | null> => {
 const run = async (): Promise<void> => {
   try {
     const basePath: string = core.getInput('path')
+    const targetKey: string = core.getInput('target_key')
 
     const files = await fs.readdir(basePath)
     const result = await Promise.all(
       files.map(async file => {
-        return await publishArticle(join(basePath, file))
+        return await publishArticle(join(basePath, file), targetKey)
       })
     )
     const published = result.filter(v => v)

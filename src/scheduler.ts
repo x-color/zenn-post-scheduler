@@ -3,18 +3,20 @@ import * as yamlFront from 'yaml-front-matter'
 
 interface ZennArticle {
   readonly published?: boolean
-  readonly published_at?: string
+  readonly __published_at?: string
   readonly __content: string
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   readonly [key: string]: any
 }
 
-export const load = (data: string): ZennArticle => {
-  return yamlFront.safeLoadFront(data)
+export const load = (data: string, targetKey: string): ZennArticle => {
+  const meta = yamlFront.safeLoadFront(data)
+  return {...meta, __published_at: meta[targetKey]}
 }
 
 export const dump = (article: ZennArticle): string => {
   const {__content, ...meta} = article
+  delete meta.__published_at
   return `---\n${yaml.dump(meta)}---${__content}`
 }
 
@@ -25,14 +27,14 @@ const toJST = (date: Date): Date => {
 }
 
 export const afterScheduledDate = (
-  {published_at}: ZennArticle,
+  {__published_at}: ZennArticle,
   now?: Date
 ): boolean => {
-  if (!published_at) {
+  if (!__published_at) {
     return false
   }
 
-  return toJST(new Date(published_at)) < toJST(now ? now : new Date())
+  return toJST(new Date(__published_at)) < toJST(now ? now : new Date())
 }
 
 export const publish = (article: ZennArticle): ZennArticle => {
