@@ -26,8 +26,17 @@ jobs:
       - uses: ./
         with:
           path: __tests__/data
+        id: scheduler
       - run: |
+          EXIT_CODE=0
           if [ "$(git diff --name-only __tests__/data/)" != "__tests__/data/published-at-yesterday.md" ]; then
+            echo "Unexpected Diff"
             git diff __tests__/data/
-            exit 1
+            EXIT_CODE=1
           fi
+          if [ "${{ steps.scheduler.outputs.published }}" != "__tests__/data/published-at-yesterday.md" ]; then
+            echo "Unexpected Output"
+            echo ${{ steps.scheduler.outputs.published }}
+            EXIT_CODE=1
+          fi
+          exit $FAILED
