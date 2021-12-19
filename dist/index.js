@@ -140,8 +140,8 @@ const dump = (article) => {
     return `---\n${yaml.dump(meta)}---${__content}`;
 };
 exports.dump = dump;
-const toJST = (date) => {
-    const offset = date.getTimezoneOffset() + 540; // 540m = 9h (offset for JST)
+const adjustTZ = (date) => {
+    const offset = -date.getTimezoneOffset() - 540; // 540m = 9h (offset for JST)
     date.setMinutes(date.getUTCMinutes() + offset);
     return date;
 };
@@ -149,7 +149,7 @@ const afterScheduledDate = ({ __published_at }, now) => {
     if (!__published_at) {
         return false;
     }
-    return toJST(new Date(__published_at)) < toJST(now ? now : new Date());
+    return adjustTZ(new Date(__published_at)) < (now ? now : new Date());
 };
 exports.afterScheduledDate = afterScheduledDate;
 const publish = (article) => {

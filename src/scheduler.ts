@@ -20,8 +20,8 @@ export const dump = (article: ZennArticle): string => {
   return `---\n${yaml.dump(meta)}---${__content}`
 }
 
-const toJST = (date: Date): Date => {
-  const offset = date.getTimezoneOffset() + 540 // 540m = 9h (offset for JST)
+const adjustTZ = (date: Date): Date => {
+  const offset = -date.getTimezoneOffset() - 540 // 540m = 9h (offset for JST)
   date.setMinutes(date.getUTCMinutes() + offset)
   return date
 }
@@ -34,7 +34,7 @@ export const afterScheduledDate = (
     return false
   }
 
-  return toJST(new Date(__published_at)) < toJST(now ? now : new Date())
+  return adjustTZ(new Date(__published_at)) < (now ? now : new Date())
 }
 
 export const publish = (article: ZennArticle): ZennArticle => {
