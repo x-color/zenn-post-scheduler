@@ -1,105 +1,85 @@
-<p align="center">
-  <a href="https://github.com/actions/typescript-action/actions"><img alt="typescript-action status" src="https://github.com/actions/typescript-action/workflows/build-test/badge.svg"></a>
-</p>
+# Zenn Post Scheduler
 
-# Create a JavaScript Action using TypeScript
+**Zenn Post Scheduler** posts an article to Zenn at the scheduled date.
+It publishes an article when it is executed after the scheduled date (JST) of the article.
 
-Use this template to bootstrap the creation of a TypeScript action.:rocket:
+## How To Work
 
-This template includes compilation support, tests, a validation workflow, publishing, and versioning guidance.  
+The action updates `published` parameter to `true` in YAML front matter of an article after the scheduled date of the article.
 
-If you are new, there's also a simpler introduction.  See the [Hello World JavaScript Action](https://github.com/actions/hello-world-javascript-action)
+1. Read all articles
+2. Get the meta data of the scheduled date of an article
+3. Update the `published` to `true` if the date is after the execution date (JST)
 
-## Create an action from this template
+### Example
 
-Click the `Use this Template` and provide the new repo details for your action
+The action updates the file when it is executed after `2021/12/31 09:00:00 JST`.
 
-## Code in Main
+**Before updating**
 
-> First, you'll need to have a reasonably modern version of `node` handy. This won't work with versions older than 9, for instance.
+```markdown
+---
+title: test title
+emoji: 🦉
+type: tech
+topics:
+  - github
+published: false
+published_at: 2021/12/31 09:00:00 # It defines the publication date
+---
 
-Install the dependencies  
-```bash
-$ npm install
+sample text
 ```
 
-Build the typescript and package it for distribution
-```bash
-$ npm run build && npm run package
+**After updating**
+
+```markdown
+---
+title: test title
+emoji: 🦉
+type: tech
+topics:
+  - github
+published: true # Updated
+published_at: 2021/12/31 09:00:00
+---
+
+sample text
 ```
 
-Run the tests :heavy_check_mark:  
-```bash
-$ npm test
-
- PASS  ./index.test.js
-  ✓ throws invalid number (3ms)
-  ✓ wait 500 ms (504ms)
-  ✓ test runs (95ms)
-
-...
-```
-
-## Change action.yml
-
-The action.yml defines the inputs and output for your action.
-
-Update the action.yml with your name, description, inputs and outputs for your action.
-
-See the [documentation](https://help.github.com/en/articles/metadata-syntax-for-github-actions)
-
-## Change the Code
-
-Most toolkit and CI/CD operations involve async operations so the action is run in an async function.
-
-```javascript
-import * as core from '@actions/core';
-...
-
-async function run() {
-  try { 
-      ...
-  } 
-  catch (error) {
-    core.setFailed(error.message);
-  }
-}
-
-run()
-```
-
-See the [toolkit documentation](https://github.com/actions/toolkit/blob/master/README.md#packages) for the various packages.
-
-## Publish to a distribution branch
-
-Actions are run from GitHub repos so we will checkin the packed dist folder. 
-
-Then run [ncc](https://github.com/zeit/ncc) and push the results:
-```bash
-$ npm run package
-$ git add dist
-$ git commit -a -m "prod dependencies"
-$ git push origin releases/v1
-```
-
-Note: We recommend using the `--license` option for ncc, which will create a license file for all of the production node modules used in your project.
-
-Your action is now published! :rocket: 
-
-See the [versioning documentation](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-
-## Validate
-
-You can now validate the action by referencing `./` in a workflow in your repo (see [test.yml](.github/workflows/test.yml))
+## Usage
 
 ```yaml
-uses: ./
-with:
-  milliseconds: 1000
+name: publish
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Publish articles
+      - uses: x-color/zenn-post-scheduler@v1.0.0
+      # Commit and Push published articles to main branch
+      - run: |
+        git config --local user.email "<YOUR EMAIL>"
+        git config --local user.name "<YOUR USERNAME>"
+        git add -u articles
+        git diff --cached --quiet || git commit -m "Publish articles" && git push origin main
 ```
 
-See the [actions tab](https://github.com/actions/typescript-action/actions) for runs of this action! :rocket:
+### Inputs
 
-## Usage:
+| Name       | Description                                 | Default        |
+| ---------- | ------------------------------------------- | -------------- |
+| path       | A path of directory for article files       | `articles`     |
+| target_key | A key of the publication date of an article | `published_at` |
 
-After testing you can [create a v1 tag](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md) to reference the stable and latest V1 action
+### Outputs
+
+| Name      | Description                            |
+| --------- | -------------------------------------- |
+| published | A list of published article files path |
