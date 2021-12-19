@@ -11,6 +11,9 @@ const publishArticle = async (
     const data = await fs.readFile(filepath)
     const article = load(data.toString(), targetKey)
 
+    core.debug(`Read Article: \n${data.toString()}`)
+    core.debug(`Convert to: \n${article}`)
+
     if (article.published) {
       core.info(`${filepath} has already published`)
       return null
