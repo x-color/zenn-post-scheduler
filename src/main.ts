@@ -13,7 +13,7 @@ const publishArticle = async (
 
     core.debug(`Read Article:\n${data.toString()}`)
     core.debug(`Convert to:`)
-    for (const key of article.keys()) {
+    for (const key of Object.keys(article)) {
       core.debug(`${key}: ${article[key]}`)
     }
 
