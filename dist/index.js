@@ -77,7 +77,7 @@ const run = () => __awaiter(void 0, void 0, void 0, function* () {
             return yield publishArticle((0, path_1.join)(basePath, file), targetKey);
         })));
         const published = result.filter(v => v);
-        core.setOutput('published', published.join(','));
+        core.setOutput('published', published);
     }
     catch (error) {
         if (error instanceof Error) {

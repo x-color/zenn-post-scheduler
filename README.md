@@ -80,6 +80,6 @@ jobs:
 
 ### Outputs
 
-| Name      | Description                            |
-| --------- | -------------------------------------- |
-| published | A list of published article files path |
+| Name      | Description                            | Example                                         |
+| --------- | -------------------------------------- | ----------------------------------------------- |
+| published | A list of published article files path | `['articles/sample1.md','articles/sample2.md']` |

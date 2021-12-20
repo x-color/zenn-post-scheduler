@@ -33,7 +33,7 @@ jobs:
             git diff __tests__/data/
             EXIT_CODE=1
           fi
-          if [ "${{ steps.scheduler.outputs.published }}" != "__tests__/data/published-at-before-8h.md" ]; then
+          if [ "${{ join(fromJSON(steps.scheduler.outputs.published)) }}" != "__tests__/data/published-at-before-8h.md" ]; then
             echo "Unexpected Output"
             echo ${{ steps.scheduler.outputs.published }}
             EXIT_CODE=1
