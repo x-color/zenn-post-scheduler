@@ -52,13 +52,13 @@ jobs:
         with:
           path: __tests__/data
           user: dummy
-        id: scheduler
+        id: scheduler2
       - name: Check the result
         run: |
           EXIT_CODE=0
-          if [ "${{ join(fromJSON(steps.scheduler.outputs.published_url)) }}" != "https://zenn.dev/dummy/articles/published-at-before-8h" ]; then
+          if [ "${{ join(fromJSON(steps.scheduler2.outputs.published_url)) }}" != "https://zenn.dev/dummy/articles/published-at-before-8h" ]; then
             echo "Unexpected Output('published_url')"
-            echo ${{ steps.scheduler.outputs.published_url }}
+            echo ${{ steps.scheduler2.outputs.published_url }}
             EXIT_CODE=1
           fi
           exit $EXIT_CODE
