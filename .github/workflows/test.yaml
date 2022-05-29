@@ -38,7 +38,7 @@ jobs:
             echo ${{ steps.scheduler.outputs.published }}
             EXIT_CODE=1
           fi
-          if [ "${{ fromJSON(steps.scheduler.outputs.published_url) }}" != "[]" ]; then
+          if [ "${{ join(fromJSON(steps.scheduler.outputs.published_url)) }}" != "" ]; then
             echo "Unexpected Output('published_url')"
             echo ${{ steps.scheduler.outputs.published_url }}
             EXIT_CODE=1
@@ -48,12 +48,14 @@ jobs:
         if: always()
         run: git restore __tests__/data
       - name: Test the action with user input
+        if: always()
         uses: ./
         with:
           path: __tests__/data
           user: dummy
         id: scheduler2
       - name: Check the result
+        if: always()
         run: |
           EXIT_CODE=0
           if [ "${{ join(fromJSON(steps.scheduler2.outputs.published_url)) }}" != "https://zenn.dev/dummy/articles/published-at-before-8h" ]; then
