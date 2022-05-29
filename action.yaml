@@ -11,9 +11,15 @@ inputs:
     required: false
     description: A key of publication date
     default: published_at
+  user:
+    required: false
+    description: Your Zenn account name. It's required if you want 'published_url'.
+    default: ""
 outputs:
   published:
     description: An list of published articles
+  published_url:
+    description: An list of published articles url
 runs:
   using: node12
   main: dist/index.js
