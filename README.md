@@ -73,13 +73,15 @@ jobs:
 
 ### Inputs
 
-| Name       | Description                                 | Default        |
-| ---------- | ------------------------------------------- | -------------- |
-| path       | A path of directory for article files       | `articles`     |
-| target_key | A key of the publication date of an article | `published_at` |
+| Name       | Description                                                        | Required | Default        |
+| ---------- | ------------------------------------------------------------------ | -------- | -------------- |
+| path       | A path of directory for article files                              | No       | `articles`     |
+| target_key | A key of the publication date of an article                        | No       | `published_at` |
+| user       | Your Zenn account name. It's required if you want `published_url`. | No       | -              |
 
 ### Outputs
 
-| Name      | Description                            | Example                                         |
-| --------- | -------------------------------------- | ----------------------------------------------- |
-| published | A list of published article files path | `['articles/sample1.md','articles/sample2.md']` |
+| Name          | Description                                                                    | Example                                                                                   |
+| ------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| published     | A list of published article files path                                         | `['articles/sample1.md','articles/sample2.md']`                                           |
+| published_url | A list of published articles url. It is empty list if `user` input is not set. | `['https://zenn.dev/<user>/articles/sample1','https://zenn.dev/<user>/articles/sample2']` |
