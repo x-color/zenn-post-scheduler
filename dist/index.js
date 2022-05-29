@@ -68,16 +68,28 @@ const publishArticle = (filepath, targetKey) => __awaiter(void 0, void 0, void 0
         return null;
     }
 });
+const publishedURL = (file, user) => {
+    if (user === '') {
+        return '';
+    }
+    const path = file.split('/').slice(-1)[0].slice(0, -3);
+    return `https://zenn.dev/${user}/articles/${path}`;
+};
 const run = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const basePath = core.getInput('path');
         const targetKey = core.getInput('target_key');
+        const user = core.getInput('user');
         const files = yield fs_1.promises.readdir(basePath);
         const result = yield Promise.all(files.map((file) => __awaiter(void 0, void 0, void 0, function* () {
             return yield publishArticle((0, path_1.join)(basePath, file), targetKey);
         })));
-        const published = result.filter(v => v);
+        const published = result.filter((v) => v !== null);
         core.setOutput('published', published);
+        const publishedURLs = published
+            .map(path => publishedURL(path, user))
+            .filter(v => v !== '');
+        core.setOutput('published_url', publishedURLs);
     }
     catch (error) {
         if (error instanceof Error) {
